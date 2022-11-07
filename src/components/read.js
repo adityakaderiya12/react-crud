@@ -17,6 +17,18 @@ const setData = (data) => {
         localStorage.setItem('Last Name', lastName);
         localStorage.setItem('Checkbox Value', checkbox)
 }
+const onDelete = (id) => {
+	axios.delete(`https://6368e91e15219b84960a0d31.mockapi.io/fakeData/${id}`)
+	.then(() => {
+		getData();
+})
+}
+const getData = () => {
+	axios.get(`https://6368e91e15219b84960a0d31.mockapi.io/fakeData`)
+			.then((getData) => {
+					 setAPIData(getData.data);
+			 })
+}
     return (
         <div>
             <Table singleLine>
@@ -26,6 +38,7 @@ const setData = (data) => {
                         <Table.HeaderCell>Last Name</Table.HeaderCell>
                         <Table.HeaderCell>Checked</Table.HeaderCell>
 												<Table.HeaderCell>Update</Table.HeaderCell>
+												<Table.HeaderCell>Delete</Table.HeaderCell>
                         
                     </Table.Row>
                 </Table.Header>
@@ -43,7 +56,10 @@ const setData = (data) => {
                                   <Button onClick={() => setData(data)}>Update</Button>
                                 </Table.Cell>
 																</Link>
-																
+																<Table.Cell>
+                                 <Button onClick={() => onDelete(data.id)}>Delete</Button>
+                                </Table.Cell>
+
                              
                             </Table.Row>
                         )
